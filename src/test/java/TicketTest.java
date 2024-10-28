@@ -15,6 +15,8 @@ public class TicketTest {
     @BeforeEach
     public void setUp() {
         driver = new ChromeDriver(); 
+        driver.get("https://blazedemo.com");
+        driver.manage().window().maximize();
     }
 
     @AfterEach
@@ -24,9 +26,6 @@ public class TicketTest {
 
     @Test
     public void buyTicket() {
-        driver.get("https://blazedemo.com");
-        driver.manage().window().maximize();
-
         // combo origem
         driver.findElement(By.name("fromPort")); // clica no combo
         {
@@ -36,14 +35,20 @@ public class TicketTest {
 
         // combo Destino
         {
-            WebElement dropdown = driver.findElement(By.name("toPort"))
+            WebElement dropdown = driver.findElement(By.name("toPort"));
             dropdown.click(); // clica no combo
             dropdown.findElement(By.xpath("//option[. = 'Cairo']")).click();
         }
 
-        driver.findElement(By.cssSelector("input.btn.btn-primary"));
+        driver.findElement(By.cssSelector("input.btn.btn-primary")).click();
 
         assertEquals("Flights from São Paolo to Cairo:", 
-            driver.findElement(By.cssSelector("//h3")).getText());
+            driver.findElement(By.cssSelector("h3")).getText());
+
+        // clica no botão do voo desejado
+        driver.findElement(By.cssSelector("tr:nth-child(1) .btn")).click();
+
+        assertEquals("Your flight from TLV to SFO has been reserved.", 
+            driver.findElement(By.cssSelector("h2")).getText());
     }
 }
