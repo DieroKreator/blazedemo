@@ -1,3 +1,5 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,5 +42,8 @@ public class TicketTest {
         }
 
         driver.findElement(By.cssSelector("input.btn.btn-primary"));
+
+        assertEquals("Flights from São Paolo to Cairo:", 
+            driver.findElement(By.cssSelector("//h3")).getText());
     }
 }
